@@ -26,7 +26,7 @@ def main():
     # input
     parser.add_argument("datadir", \
                         help = "Directory containing 10x Genomics scRNA-seq data files.", \
-                        metavar="DIR"
+                        metavar="DIR", \
                         type = str)
 
     # output
