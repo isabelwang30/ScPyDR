@@ -35,13 +35,26 @@ def ERROR(msg):
 	sys.stderr.write(bcolors.FAIL + "[ERROR]: " + bcolors.ENDC + "{msg}\n".format(msg=msg) )
 	sys.exit(1)
 
-# -------------------- preprocess data --------------------
-"""filter, normalize, and log transform AnnData to keep highly variable genes"""
+# -------------------- load and preprocess data --------------------
+def load(datadir, prefix="", cache=True):
+    """
+    Load a single set of 10x Genomics data into an AnnData object.
+
+    Parameters:
+    - datadir: Directory containing the 10x Genomics-formatted files.
+    - prefix: Optional prefix to prepend to gene names (default is "").
+    - cache: Whether to cache the AnnData object (default is True).
+
+    Returns:
+    - AnnData object containing the loaded data.
+    """
+    return sc.read_10x_mtx(datadir, prefix=prefix, cache=cache)
+
 def preprocess(adata, min_genes=200, min_cells=5,
 				min_cell_reads=None, min_gene_counts=None,
 				n_top_genes=500, target_sum=1e4):
 	"""
-	Preprocess an AnnData object for downstream analysis.
+	Preprocess an AnnData object for downstream analysis. Filters, normalizes, and log transforms the data, then keeps only the highly variable genes.
 	
 	Parameters:
 	- adata: AnnData object
@@ -84,7 +97,6 @@ def preprocess(adata, min_genes=200, min_cells=5,
 	
 	return adata
 
-"""convert AnnData object to dataframe"""
 def convert(adata, metadata_cols=None):
 	"""
     Convert an AnnData object to a pandas DataFrame.
