@@ -175,7 +175,7 @@ class scpydrPCA:
         Returns
         -------
         scpydrPCA
-            The fitted PCA object.
+            The PCA object with fitted principal component axes.
         """
         # Standardize and center data
         self.mean = np.mean(X, axis=0)
@@ -202,12 +202,12 @@ class scpydrPCA:
         Parameters
         ----------
         X : np.ndarray
-            Data matrix to project onto principal components.
+            Data matrix with raw counts.
 
         Returns
         -------
         np.ndarray
-            Transformed data matrix.
+            Transformed data matrix made by projecting raw counts onto the new principal component axes.
         """
         X_std = (X - self.mean) / self.normalize 
         return np.dot(X_std, self.components.T)
