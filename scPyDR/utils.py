@@ -99,12 +99,10 @@ def convert(adata, metadata_cols=None):
     # convert the expression matrix (.X) to a df
 	# if .X is a dense matrix
 	if isinstance(adata.X, np.ndarray):  
-		df = pd.DataFrame(adata.X, index=adata.obs.index, 
-						  columns=adata.var.index)
+		df = pd.DataFrame(adata.X, index=adata.obs.index, columns=adata.var.index)
 	# if .X is a sparse matrix
 	else:
-		df = pd.DataFrame.sparse.from_spmatrix(adata.X,
-											   index=adata.obs.index, columns=adata.var.index)
+		df = pd.DataFrame.sparse.from_spmatrix(adata.X, index=adata.obs.index, columns=adata.var.index)
 	
 	if metadata_cols is not None:
         # select specified metadata columns from .obs
