@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import anndata as ad
 from anndata import AnnData
 import scanpy as sc
+import umap
 
 class bcolors:
     HEADER = '\033[95m'
@@ -211,3 +212,52 @@ class scpydrPCA:
         """
         X_std = (X - self.mean) / self.normalize 
         return np.dot(X_std, self.components.T)
+
+def umap_embedding(adata, min_dist=0.1, n_components=2, n_epochs=200, learning_rate=1.0, n_neighbors=None):
+    """
+    Compute UMAP embedding for visualization.
+
+    Parameters
+    ----------
+    adata : AnnData
+        Annotated data object containing the input data.
+    min_dist : float, optional
+        Minimum distance between points in the UMAP embedding (default is 0.1).
+    n_components : int, optional
+        Number of dimensions of the UMAP embedding (default is 2).
+    n_epochs : int, optional
+        Number of epochs for optimizing the UMAP embedding (default is 200).
+    learning_rate : float, optional
+        Learning rate for optimizing the UMAP embedding (default is 1.0).
+    n_neighbors : int or None, optional
+        Number of nearest neighbors to use for constructing the UMAP graph. If None, it will be determined automatically based on the size of the data.
+
+    Returns
+    -------
+    np.ndarray
+        UMAP embedding of the input data.
+    """
+    adatac = adata.copy()  # Make a copy to avoid modifying the original object
+    
+    # Compute default number of neighbors if not specified by the user
+    if n_neighbors is None:
+        # Use a heuristic based on the size of the data >10000 genes has different number of neighbors
+        n_neighbors = 15 if adatac.shape[0] > 10000 else 10
+    
+    # Compute nearest neighbors using scanpy's algorithm
+    sc.pp.neighbors(adatac, n_neighbors=n_neighbors)
+    
+    # Create UMAP object
+    reducer = umap.UMAP(
+        n_neighbors=n_neighbors,
+        metric='euclidean',
+        random_state=None,  # You can set a random state if desired
+        n_components=n_components,
+        min_dist=min_dist,
+        n_epochs=n_epochs,
+        learning_rate=learning_rate
+    )
+    
+    # Fit and transform the data
+    embedding = reducer.fit_transform(adata.X)
+    return embedding
