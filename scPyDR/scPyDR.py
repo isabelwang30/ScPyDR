@@ -8,6 +8,7 @@ Similar to scanpy's `scanpy.pp.pca`, `scanpy.tl.tsne`, and `scanpy.tl.umap`.
 
 import os
 import sys
+import matplotlib.pyplot as plt
 import argparse
 import numpy as np
 import pandas as pd
@@ -72,10 +73,10 @@ def main():
                         help = "Run UMAP for dimensionality reduction and visualization.", 
                         action="store_true", 
                         required = False)
-    # TO DO!
-    # parser.add_argument("-v", "--visualize", \
-    #                     help = "Visualize the results of scPyDR.", \
-    #                     required = False)
+    parser.add_argument("-v", "--visualize", 
+                    help="Visualize the results of scPyDR.", 
+                    action="store_true", 
+                    required=False)
 
     # parse args
     args = parser.parse_args()
@@ -159,6 +160,23 @@ def main():
     sys.stdout.write("New PCs computed. \n")
     df = pca.transform(df) #fit data to new PCs
     sys.stdout.write("Original data successfully projected onto the new PCs! \n\n")
+    
+    if args.umap:
+        sys.stdout.write("Running UMAP for dimensionality reduction and visualization... \n")
+        umap_embedding = umap_embedding(adata)
+        # Further actions with umap_embedding if needed
+        sys.stdout.write("UMAP computation completed! \n\n")
+        if args.visualize:
+            # Plot the UMAP embedding
+            fig, ax = plt.subplots(figsize=(8, 6))  # Set the figure size
+            ax.scatter(umap_embedding[:, 0], umap_embedding[:, 1], s=20, c='b', alpha=0.5)  # Adjust marker size, color, and transparency
+            ax.set_title('UMAP Embedding', fontsize=16)  # Set title and adjust font size
+            ax.set_xlabel('UMAP 1', fontsize=14)  # Set x-axis label and adjust font size
+            ax.set_ylabel('UMAP 2', fontsize=14)  # Set y-axis label and adjust font size
+            ax.grid(True, linestyle='--', alpha=0.5)  # Add grid with dashed lines and transparency
+            plt.tight_layout()  # Adjust layout to prevent overlapping labels
+            plt.show()
+
     # TRY LATER: 
     # sys.stdout.write("Would you like to visualize the data in 2D? [y/n] \n")
     # input()
