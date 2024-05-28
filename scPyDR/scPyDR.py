@@ -68,6 +68,10 @@ def main():
                         help = "Print the version of scPyDR.", \
                         action = "version", \
                         version = '{version}'.format(version = __version__))
+    parser.add_argument("-u", "--umap", 
+                        help = "Run UMAP for dimensionality reduction and visualization.", 
+                        action="store_true", 
+                        required = False)
     # TO DO!
     # parser.add_argument("-v", "--visualize", \
     #                     help = "Visualize the results of scPyDR.", \
