@@ -21,11 +21,10 @@ setup(
     version=VERSION,
     description='CSE185 Final Project',
     author='Anushka Sheoran, Isabel Wang, Monica Park',
-    author_email='asheoran@ucsd.edu, ijwang@ucsd.edu, mepark@ucsd.edu',
     packages=find_packages(),
     entry_points={
         "console_scripts": [
-            "scpyDR=scPyDR.scPyDR:main"  # Entry point for command-line script
+            "scpydr=scPyDR.scPyDR:main"  # Entry point for command-line script
         ],
     },
 )
