@@ -154,7 +154,7 @@ def main():
         num_pts = df.shape[0] * df.shape[1]
         num_features = df.shape[1]
         nComp = min(num_pts - 1, num_features)
-    pca = scpydrPCA(nComp=nComp) #create pca object
+    pca = utils.scpydrPCA(nComp=nComp) #create pca object
     sys.stdout.write("PCA object created. \n")
     pca.fit(df) #compute new PCs
     sys.stdout.write("New PCs computed. \n")
