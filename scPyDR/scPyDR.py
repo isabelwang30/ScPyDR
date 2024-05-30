@@ -10,7 +10,7 @@ import os
 import sys
 
 # Add current directory to Python path
-sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+sys.path.append(os.getcwd())
 
 import matplotlib.pyplot as plt
 import argparse
