@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import argparse
 import numpy as np
 import pandas as pd
-import utils
+from . import utils as utils
 from scPyDR import __version__
 
 def main():
