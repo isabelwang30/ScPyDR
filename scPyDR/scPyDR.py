@@ -24,19 +24,19 @@ def main():
         description = "Command-line script to reduce the dimensionality and visualize 10x Genomics scRNA-seq data"
     )
 
-    # input
+    # input (required)
     parser.add_argument("datadir", \
                         help = "Directory containing 10x Genomics scRNA-seq data files.", \
                         metavar="DIR", \
                         type = str)
 
-    # output
+    # output (optional)
     parser.add_argument("-o", "--output", \
                         help = "Output directory to store results. Default: working directory.", \
                         type = str, \
                         required = False)
     
-    # other options
+    # other options (optional)
     parser.add_argument("-g", "--min_genes", \
                         help = "Minimum number of genes expressed per cell. Default: 200.", \
                         type = int, \
