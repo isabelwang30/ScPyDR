@@ -8,6 +8,10 @@ Similar to scanpy's `scanpy.pp.pca`, `scanpy.tl.tsne`, and `scanpy.tl.umap`.
 
 import os
 import sys
+
+# Add current directory to Python path
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+
 import matplotlib.pyplot as plt
 import argparse
 import numpy as np
