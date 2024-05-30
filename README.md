@@ -41,13 +41,21 @@ python setup.py install --user
 
 If the install was successful, the command `scpydr --help` should show a useful help message.
 
-*Note: if you get an error that says the `scpydr` command was not found, you may need to include the script installation path in your `$PATH` variable before calling `scpydr`. You can do this with the following command:*
+*Note: if you get an error that says the `scpydr` command was not found, you may need to include the script installation path in your `$PATH` variable before calling `scpydr`. You can do this with the following command, replacing `<user>` with your own username:*
 ```
 export PATH=$PATH:/home/<user>/.local/bin
 ```
 
 ## Basic Usage<a name="Usage"></a>
+The basic usage of scPyDR is as follows:
+```
+scpydr [path to 10x Genomics data directory (required)] [other options]
+```
 
+To run `scPyDR` on a small test example (see `test_data/lab6_subsets` in this repo):
+```
+scpydr test_data/lab6_subsets
+```
 
 ## scPyDR Options<a name="Options"></a>
 
