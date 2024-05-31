@@ -25,57 +25,61 @@ def main():
     )
 
     # input (required)
-    parser.add_argument("datadir",
-                        help="Directory containing 10x Genomics scRNA-seq data files.",
-                        metavar="DIR",
+    parser.add_argument("datadir", \
+                        help="Directory containing 10x Genomics scRNA-seq data files.", \
+                        metavar="DIR", \
                         type=str)
 
     # output (optional)
-    parser.add_argument("-o", "--output",
-                        help="Output directory to store results. Default: working directory.",
-                        type=str,
+    parser.add_argument("-o", "--output", \
+                        help="Output directory to store results. Default: working directory.", \
+                        type=str, \
                         required=False)
-
+    
     # other options (optional)
-    parser.add_argument("-g", "--min_genes",
-                        help="Minimum number of genes expressed per cell. Default: 200.",
-                        type=int,
+    parser.add_argument("-g", "--min_genes", \
+                        help="Minimum number of genes expressed per cell. Default: 200.", \
+                        type=int, \
+                        default=200,  # Assign default value
                         required=False)
-    parser.add_argument("-c", "--min_cells",
-                        help="Minimum number of cells expressing a gene. Default: 5.",
-                        type=int,
+    parser.add_argument("-c", "--min_cells", \
+                        help="Minimum number of cells expressing a gene. Default: 5.", \
+                        type=int, \
+                        default=5,  # Assign default value
                         required=False)
-    parser.add_argument("-cr", "--min_cell_reads",
-                        help="Minimum number of reads per cell. Default: None.",
-                        type=int,
+    parser.add_argument("-cr", "--min_cell_reads", \
+                        help="Minimum number of reads per cell. Default: None.", \
+                        type=int, \
                         required=False)
-    parser.add_argument("-gc", "--min_gene_counts",
-                        help="Minimum number of counts per gene. Default: None.",
-                        type=int,
+    parser.add_argument("-gc", "--min_gene_counts", \
+                        help="Minimum number of counts per gene. Default: None.", \
+                        type=int, \
                         required=False)
-    parser.add_argument("-ntop", "--n_top_genes",
-                        help="Number of highly variable genes to keep. Default: 500.",
-                        type=int,
+    parser.add_argument("-ntop", "--n_top_genes", \
+                        help="Number of highly variable genes to keep. Default: 500.", \
+                        type=int, \
+                        default=500,  # Assign default value
                         required=False)
-    parser.add_argument("-t", "--target_sum",
-                        help="Number of reads per cell for normalization. Default: 1e4.",
-                        type=float,
+    parser.add_argument("-t", "--target_sum", \
+                        help="Number of reads per cell for normalization. Default: 1e4.", \
+                        type=float, \
+                        default=1e4,  # Assign default value
                         required=False)
-    parser.add_argument("-n", "--nComp",
-                        help="Number of principal components. Default: for n data points and m features, there are min(n-1,m) PCs.",
-                        type=int,
+    parser.add_argument("-n", "--nComp", \
+                        help="Number of principal components. Default: for n data points and m features, there are min(n-1,m) PCs.", \
+                        type=int, \
                         required=False)
-    parser.add_argument("--version",
-                        help="Print the version of scPyDR.",
-                        action="version",
+    parser.add_argument("--version", \
+                        help="Print the version of scPyDR.", \
+                        action="version", \
                         version='{version}'.format(version=__version__))
-    parser.add_argument("-u", "--umap",
-                        help="Run UMAP for dimensionality reduction and visualization.",
-                        action="store_true",
+    parser.add_argument("-u", "--umap", 
+                        help="Run UMAP for dimensionality reduction and visualization.", 
+                        action="store_true", 
                         required=False)
-    parser.add_argument("-v", "--visualize",
-                        help="Visualize the results of scPyDR.",
-                        action="store_true",
+    parser.add_argument("-v", "--visualize", 
+                        help="Visualize the results of scPyDR.", 
+                        action="store_true", 
                         required=False)
 
     # parse args
