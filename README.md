@@ -49,7 +49,7 @@ export PATH=$PATH:/home/<user>/.local/bin
 ## Basic Usage<a name="Usage"></a>
 The basic usage of scPyDR is as follows:
 ```
-scpydr [datadir] [other options]
+scpydr [DATADIR] [other options]
 ```
 
 To run `scPyDR` on a small test example (see `test_data/lab6_subsets` in this repo):
@@ -57,19 +57,24 @@ To run `scPyDR` on a small test example (see `test_data/lab6_subsets` in this re
 scpydr test_data/lab6_subsets
 ```
 
+With the same test example, to run `scPyDR`'s PCA and UMAP functions and visualize the UMAP results:
+```
+scpydr test_data/lab6_subsets -u -v
+```
+
 ## scPyDR Options<a name="Options"></a>
 scPyDR requires the following input file:
-* `datadir`: Directory containing 10x Genomics scRNA-seq data files. See below for format specifications on the 10x Genomics data files.
+* `[DATADIR]`: Directory containing 10x Genomics scRNA-seq data files. See below for format specifications on the 10x Genomics data files.
 
 Additional options include:
-* `-o`, `--output`: Output directory to store results. Default: working directory.
-* `-g`, `--min_genes`: Minimum number of genes expressed per cell. Default: 200.
-* `-c`, `--min_cells`: Minimum number of cells expressing a gene. Default: 5.
-* `-cr`, `--min_cell_reads`: Minimum number of reads per cell. Default: None.
-* `-gc`, `--min_gene_counts`: Minimum number of counts per gene. Default: None.
-* `-ntop`, `--n_top_genes`: Number of highly variable genes to keep. Default: 500.
-* `-t`, `--target_sum`: Number of reads per cell for normalization. Default: 1e4.
-* `-n`, `--nComp`: Number of principal componenets. Default: for n data points and m features, there are min(n-1,m) PCs.
+* `-o`, `--output` `[OUTDIR]`: Output directory to store results. Default: working directory.
+* `-g`, `--min_genes` `[INT]`: Minimum number of genes expressed per cell. Default: 200.
+* `-c`, `--min_cells` `[INT]`: Minimum number of cells expressing a gene. Default: 5.
+* `-cr`, `--min_cell_reads` `[INT]`: Minimum number of reads per cell. Default: None.
+* `-gc`, `--min_gene_counts` `[INT]`: Minimum number of counts per gene. Default: None.
+* `-ntop`, `--n_top_genes` `[INT]`: Number of highly variable genes to keep. Default: 500.
+* `-t`, `--target_sum` `[FLOAT]`: Number of reads per cell for normalization. Default: 1e4.
+* `-n`, `--nComp` `[INT]`: Number of principal componenets. Default: for n data points and m features, there are min(n-1,m) PCs.
 * `--version`: Print the version of scPyDR.
 * `-u`, `--umap`: Run UMAP for dimensionality reduction and visualization.
 * `-v`, `--visualize`: Visualize the results of scPyDR.
