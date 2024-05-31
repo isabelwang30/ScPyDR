@@ -39,30 +39,49 @@ def ERROR(msg):
 
 # -------------------- load and preprocess data --------------------
 def load(datadir, prefix="", cache=True):
+    # List the files in the directory
     files = os.listdir(datadir)
     
-    # Find the files with optional prefix
-    barcodes_file = next((f for f in files if 'barcodes' in f and f.endswith('.tsv.gz')), None)
-    features_file = next((f for f in files if 'features' in f and f.endswith('.tsv.gz')), None)
-    matrix_file = next((f for f in files if 'matrix' in f and f.endswith('.mtx.gz')), None)
+    # Debug: print out the found files
+    print("Files in directory:", files)
     
+    # Find the specific files with or without prefix
+    barcodes_file = next((f for f in files if f.startswith(prefix + 'barcodes') and f.endswith('.tsv.gz')), None)
+    features_file = next((f for f in files if f.startswith(prefix + 'features') and f.endswith('.tsv.gz')), None)
+    matrix_file = next((f for f in files if f.startswith(prefix + 'matrix') and f.endswith('.mtx.gz')), None)
+    
+    # Debug: print the identified files
+    print("Identified barcodes file:", barcodes_file)
+    print("Identified features file:", features_file)
+    print("Identified matrix file:", matrix_file)
+    
+    # Check if all necessary files are found
     if not all([barcodes_file, features_file, matrix_file]):
-        print("Files were not found")
         ERROR("Missing required files in the directory. Ensure 'barcodes', 'features', and 'matrix' files are present.")
     
     barcodes_path = os.path.join(datadir, barcodes_file)
     features_path = os.path.join(datadir, features_file)
     matrix_path = os.path.join(datadir, matrix_file)
     
-    # Set var_names parameter based on the files present
+    # Debug: print the full paths to the files
+    print("Barcodes path:", barcodes_path)
+    print("Features path:", features_path)
+    print("Matrix path:", matrix_path)
+    
+    # Set var_names parameter based on the presence of gene symbols or gene ids
     var_names = 'gene_symbols' if 'features.tsv.gz' in features_file else 'gene_ids'
-    print("Now we are going to read the data")
-    # Read the data
-    return sc.read_10x_mtx(
-        datadir,
-        var_names=var_names,
-        cache=cache
-    )
+    
+    # Read the data using scanpy's read_10x_mtx function
+    try:
+        adata = sc.read_10x_mtx(
+            datadir,
+            var_names=var_names,
+            cache=cache
+        )
+        print("Data loaded successfully.")
+        return adata
+    except Exception as e:
+        ERROR(f"An error occurred while reading the data: {e}")
 
 def preprocess(adata, min_genes=200, min_cells=5,
                 min_cell_reads=None, min_gene_counts=None,
