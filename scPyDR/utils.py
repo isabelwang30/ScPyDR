@@ -56,7 +56,7 @@ def load(datadir, prefix="", cache=True):
     
     # Set var_names parameter based on the files present
     var_names = 'gene_symbols' if 'features.tsv.gz' in features_file else 'gene_ids'
-    
+    print("Now we are going to read the data")
     # Read the data
     return sc.read_10x_mtx(
         datadir,
