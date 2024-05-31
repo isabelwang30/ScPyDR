@@ -40,21 +40,27 @@ def ERROR(msg):
 # -------------------- load and preprocess data --------------------
 def load(datadir, prefix="", cache=True):
     files = os.listdir(datadir)
+    
+    # Find the files with optional prefix
     barcodes_file = next((f for f in files if 'barcodes' in f and f.endswith('.tsv.gz')), None)
     features_file = next((f for f in files if 'features' in f and f.endswith('.tsv.gz')), None)
     matrix_file = next((f for f in files if 'matrix' in f and f.endswith('.mtx.gz')), None)
-
+    
     if not all([barcodes_file, features_file, matrix_file]):
         print("Files were not found")
         ERROR("Missing required files in the directory. Ensure 'barcodes', 'features', and 'matrix' files are present.")
-
+    
     barcodes_path = os.path.join(datadir, barcodes_file)
     features_path = os.path.join(datadir, features_file)
     matrix_path = os.path.join(datadir, matrix_file)
-
+    
+    # Set var_names parameter based on the files present
+    var_names = 'gene_symbols' if 'features.tsv.gz' in features_file else 'gene_ids'
+    
+    # Read the data
     return sc.read_10x_mtx(
         datadir,
-        prefix=prefix,
+        var_names=var_names,
         cache=cache
     )
 
