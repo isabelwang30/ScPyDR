@@ -171,8 +171,16 @@ def main():
     sys.stdout.write("PCA object created. \n")
     pca.fit(df)  # compute new PCs
     sys.stdout.write("New PCs computed. \n")
-    df = pca.transform(df)  # fit data to new PCs
+    pca_results = pca.transform(df)  # fit data to new PCs
     sys.stdout.write("Original data successfully projected onto the new PCs! \n\n")
+    
+    filename_prefix = os.path.basename(args.datadir)[:5]
+
+    # Save PCA results to file
+    utils.save_pca_results(outdir, filename_prefix, pca_results)
+
+    # Plot PCA results and save the plot to a file
+    utils.plot_pca_results(outdir, filename_prefix, pca_results)
 
     if args.umap:
         sys.stdout.write("Running UMAP for dimensionality reduction and visualization... \n")
