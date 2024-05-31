@@ -39,24 +39,23 @@ def ERROR(msg):
 
 # -------------------- load and preprocess data --------------------
 def load(datadir, prefix="", cache=True):
-    """
-    Load a single set of 10x Genomics data into an AnnData object.
+    files = os.listdir(datadir)
+    barcodes_file = next((f for f in files if 'barcodes' in f and f.endswith('.tsv.gz')), None)
+    features_file = next((f for f in files if 'features' in f and f.endswith('.tsv.gz')), None)
+    matrix_file = next((f for f in files if 'matrix' in f and f.endswith('.mtx.gz')), None)
 
-    Parameters
-    ----------
-    datadir : str
-        Directory containing the 10x Genomics-formatted files.
-    prefix : str, optional
-        Optional prefix to prepend to gene names (default is "").
-    cache : bool, optional
-        Whether to cache the AnnData object (default is True).
+    if not all([barcodes_file, features_file, matrix_file]):
+        ERROR("Missing required files in the directory. Ensure 'barcodes', 'features', and 'matrix' files are present.")
 
-    Returns
-    -------
-    AnnData
-        AnnData object containing the loaded data.
-    """
-    return sc.read_10x_mtx(datadir, prefix=prefix, cache=cache)
+    barcodes_path = os.path.join(datadir, barcodes_file)
+    features_path = os.path.join(datadir, features_file)
+    matrix_path = os.path.join(datadir, matrix_file)
+
+    return sc.read_10x_mtx(
+        datadir,
+        var_names='gene_symbols' if prefix == "" else 'gene_ids',
+        cache=cache
+    )
 
 def preprocess(adata, min_genes=200, min_cells=5,
                 min_cell_reads=None, min_gene_counts=None,
