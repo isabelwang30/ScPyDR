@@ -8,15 +8,11 @@ Similar to scanpy's `scanpy.pp.pca`, `scanpy.tl.tsne`, and `scanpy.tl.umap`.
 
 import os
 import sys
-
-# Add current directory to Python path
-sys.path.append(os.getcwd())
-
 import matplotlib.pyplot as plt
 import argparse
 import numpy as np
 import pandas as pd
-import utils
+from . import utils as utils
 from scPyDR import __version__
 
 def main():
