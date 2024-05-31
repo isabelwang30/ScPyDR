@@ -150,7 +150,7 @@ def main():
 
     sys.stdout.write("Running PCA for dimensionality reduction... \n")
 
-    nComp = None
+    #nComp = None
     if args.nComp is None:
         #for n data points and m features, there are min(n-1,m) PCs.
         num_pts = df.shape[0] * df.shape[1]
