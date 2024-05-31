@@ -196,7 +196,7 @@ def main():
 
     # -------------------- analysis and conclusion --------------------
 
-    sys.stdout.write("Summarizing results...")
+    sys.stdout.write("Summarizing results...\n")
 
     """ 
     TO DO: benchmarking, analysis, conclusions
