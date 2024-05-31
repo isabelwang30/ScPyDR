@@ -66,7 +66,7 @@ Additional options include:
 * `-g`, `--min_genes`: Minimum number of genes expressed per cell. Default: 200.
 * `-c`, `--min_cells`: Minimum number of cells expressing a gene. Default: 5.
 * `-cr`, `--min_cell_reads`: Minimum number of reads per cell. Default: None.
-* `-gc`, `--min_gene_counts`: Minimum number of counts per gene. Default: None."
+* `-gc`, `--min_gene_counts`: Minimum number of counts per gene. Default: None.
 * `-ntop`, `--n_top_genes`: Number of highly variable genes to keep. Default: 500.
 * `-t`, `--target_sum`: Number of reads per cell for normalization. Default: 1e4.
 * `-n`, `--nComp`: Number of principal componenets. Default: for n data points and m features, there are min(n-1,m) PCs.
