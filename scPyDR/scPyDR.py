@@ -149,11 +149,14 @@ def main():
     # -------------------- initialize, fit and transform data using pca --------------------
 
     sys.stdout.write("Running PCA for dimensionality reduction... \n")
-    if nComp is None:
+    if args.nComp is None:
         #for n data points and m features, there are min(n-1,m) PCs.
         num_pts = df.shape[0] * df.shape[1]
         num_features = df.shape[1]
         nComp = min(num_pts - 1, num_features)
+    else:
+        nComp = args.nComp
+        
     pca = utils.scpydrPCA(nComp=nComp) #create pca object
     sys.stdout.write("PCA object created. \n")
     pca.fit(df) #compute new PCs
@@ -163,7 +166,7 @@ def main():
     
     if args.umap:
         sys.stdout.write("Running UMAP for dimensionality reduction and visualization... \n")
-        umap_embedding = umap_embedding(adata)
+        umap_embedding = utils.umap_embedding(adata)
         # Further actions with umap_embedding if needed
         sys.stdout.write("UMAP computation completed! \n\n")
         if args.visualize:
