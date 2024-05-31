@@ -54,7 +54,7 @@ def load(datadir, prefix="", cache=True):
 
     return sc.read_10x_mtx(
         datadir,
-        var_names='gene_symbols' if prefix == "" else 'gene_ids',
+        prefix=prefix,
         cache=cache
     )
 
