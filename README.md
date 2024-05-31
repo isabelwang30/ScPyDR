@@ -52,14 +52,14 @@ The basic usage of scPyDR is as follows:
 scpydr [DATADIR] [other options]
 ```
 
-To run `scPyDR` on a small test example (see `test_data/lab6_subsets` in this repo):
+To run `scPyDR` on a small test example (see `benchmark` in this repo):
 ```
-scpydr test_data/lab6_subsets
+scpydr benchmark
 ```
 
 With the same test example, to run `scPyDR`'s PCA and UMAP functions and visualize the UMAP results:
 ```
-scpydr test_data/lab6_subsets -u -v
+scpydr benchmark -u -v
 ```
 
 ## scPyDR Options<a name="Options"></a>
