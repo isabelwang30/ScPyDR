@@ -261,3 +261,55 @@ def umap_embedding(adata, min_dist=0.1, n_components=2, n_epochs=200, learning_r
     # Fit and transform the data
     embedding = reducer.fit_transform(adata.X)
     return embedding
+    
+def save_pca_results(outdir, filename_prefix, pca_results):
+    """
+    Save PCA results to a file.
+
+    Parameters
+    ----------
+    outdir : str
+        Output directory to save the file.
+    filename_prefix : str
+        Prefix for the output filename.
+    pca_results : np.ndarray
+        PCA results to save.
+
+    Returns
+    -------
+    None
+    """
+    output_file = os.path.join(outdir, f"{filename_prefix}_pca.txt")
+    np.savetxt(output_file, pca_results, delimiter="\t")
+    print(f"PCA results saved to {output_file}")
+
+def plot_pca_results(outdir, filename_prefix, pca_results):
+    """
+    Plot PCA results and save the plot to a file.
+
+    Parameters
+    ----------
+    outdir : str
+        Output directory to save the plot.
+    filename_prefix : str
+        Prefix for the output filename.
+    pca_results : np.ndarray
+        PCA results to plot.
+
+    Returns
+    -------
+    None
+    """
+    plt.figure(figsize=(8, 6))
+    plt.scatter(pca_results[:, 0], pca_results[:, 1], s=20, c='b', alpha=0.5)
+    plt.title('PCA Plot', fontsize=16)
+    plt.xlabel('PC1', fontsize=14)
+    plt.ylabel('PC2', fontsize=14)
+    plt.grid(True, linestyle='--', alpha=0.5)
+    plt.tight_layout()
+
+    output_plot = os.path.join(outdir, f"{filename_prefix}_pca_plot.png")
+    plt.savefig(output_plot)
+    plt.close()
+    print(f"PCA plot saved to {output_plot}")
+
