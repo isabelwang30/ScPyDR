@@ -38,6 +38,7 @@ def ERROR(msg):
     sys.exit(1)
 
 # -------------------- load and preprocess data --------------------
+
 def load(datadir, prefix="", cache=True):
     # List the files in the directory
     files = os.listdir(datadir)
@@ -46,9 +47,9 @@ def load(datadir, prefix="", cache=True):
     print("Files in directory:", files)
     
     # Find the specific files with or without prefix
-    barcodes_file = next((f for f in files if 'barcodes' in f and f.endswith('.tsv.gz')), None)
-    features_file = next((f for f in files if 'features' in f and f.endswith('.tsv.gz')), None)
-    matrix_file = next((f for f in files if 'matrix' in f and f.endswith('.mtx.gz')), None)
+    barcodes_file = next((f for f in files if f.startswith(prefix + 'barcodes') and f.endswith('.tsv.gz')), None)
+    features_file = next((f for f in files if f.startswith(prefix + 'features') and f.endswith('.tsv.gz')), None)
+    matrix_file = next((f for f in files if f.startswith(prefix + 'matrix') and f.endswith('.mtx.gz')), None)
     
     # Debug: print the identified files
     print("Identified barcodes file:", barcodes_file)
@@ -63,25 +64,38 @@ def load(datadir, prefix="", cache=True):
     features_path = os.path.join(datadir, features_file)
     matrix_path = os.path.join(datadir, matrix_file)
     
-    # Debug: print the full paths to the files
-    print("Barcodes path:", barcodes_path)
-    print("Features path:", features_path)
-    print("Matrix path:", matrix_path)
+    # Create temporary copies of the files with the expected names
+    temp_dir = os.path.join(datadir, "temp_10x_files")
+    os.makedirs(temp_dir, exist_ok=True)
     
-    # Set var_names parameter based on the presence of gene symbols or gene ids
-    var_names = 'gene_symbols' if 'features.tsv.gz' in features_file else 'gene_ids'
+    temp_barcodes_path = os.path.join(temp_dir, "barcodes.tsv.gz")
+    temp_features_path = os.path.join(temp_dir, "features.tsv.gz")
+    temp_matrix_path = os.path.join(temp_dir, "matrix.mtx.gz")
+    
+    shutil.copy(barcodes_path, temp_barcodes_path)
+    shutil.copy(features_path, temp_features_path)
+    shutil.copy(matrix_path, temp_matrix_path)
+    
+    # Debug: print the temporary paths
+    print("Temporary barcodes path:", temp_barcodes_path)
+    print("Temporary features path:", temp_features_path)
+    print("Temporary matrix path:", temp_matrix_path)
     
     # Read the data using scanpy's read_10x_mtx function
     try:
         adata = sc.read_10x_mtx(
-            datadir,
-            var_names=var_names,
+            temp_dir,
+            var_names='gene_symbols' if 'features.tsv.gz' in features_file else 'gene_ids',
             cache=cache
         )
         print("Data loaded successfully.")
-        return adata
     except Exception as e:
         ERROR(f"An error occurred while reading the data: {e}")
+    finally:
+        # Clean up the temporary directory
+        shutil.rmtree(temp_dir)
+    
+    return adata
 
 def preprocess(adata, min_genes=200, min_cells=5,
                 min_cell_reads=None, min_gene_counts=None,
