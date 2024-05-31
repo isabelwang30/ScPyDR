@@ -137,9 +137,7 @@ def main():
     try:
         adata = utils.load(args.datadir)
     except Exception:
-        utils.ERROR(">> Failed to load 10x Genomics data into an AnnData object. Please check 1) path to directory \
-                    and 2) directory contains properly formatted 10x Genomics files. \
-                    Read more on 10x Genomics files here: https://www.10xgenomics.com/support/software/space-ranger/latest/advanced/hdf5-feature-barcode-matrix-format")
+        utils.ERROR(">> Failed to load 10x Genomics data into an AnnData object. Please check: \n 1) path to directory \n 2) directory contains properly formatted 10x Genomics files. \n Read more on 10x Genomics files here: https://www.10xgenomics.com/support/software/space-ranger/latest/advanced/hdf5-feature-barcode-matrix-format")
     try:
         adata = utils.preprocess(adata, args.min_genes, args.min_cells, args.min_cell_reads,
                                  args.min_gene_counts, args.n_top_genes, args.target_sum)
