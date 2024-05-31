@@ -49,7 +49,7 @@ export PATH=$PATH:/home/<user>/.local/bin
 ## Basic Usage<a name="Usage"></a>
 The basic usage of scPyDR is as follows:
 ```
-scpydr [path to 10x Genomics data directory (required)] [other options]
+scpydr [datadir] [other options]
 ```
 
 To run `scPyDR` on a small test example (see `test_data/lab6_subsets` in this repo):
