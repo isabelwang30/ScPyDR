@@ -45,6 +45,7 @@ def load(datadir, prefix="", cache=True):
     matrix_file = next((f for f in files if 'matrix' in f and f.endswith('.mtx.gz')), None)
 
     if not all([barcodes_file, features_file, matrix_file]):
+        print("Files were not found")
         ERROR("Missing required files in the directory. Ensure 'barcodes', 'features', and 'matrix' files are present.")
 
     barcodes_path = os.path.join(datadir, barcodes_file)
