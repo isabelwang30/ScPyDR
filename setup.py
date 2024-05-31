@@ -24,7 +24,7 @@ setup(
     packages=find_packages(),
     entry_points={
         "console_scripts": [
-            "scpydr=scPyDR.scPyDR:main"  # Entry point for command-line script
+            "scpydr=scPyDR.scPyDR.__main__:main"  # Entry point for command-line script
         ],
     },
 )
