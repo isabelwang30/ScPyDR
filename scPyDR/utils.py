@@ -46,10 +46,11 @@ def load(datadir, prefix="", cache=True):
     # Debug: print out the found files
     print("Files in directory:", files)
     
-    # Find the specific files with or without prefix
-    barcodes_file = next((f for f in files if f.startswith(prefix + 'barcodes') and f.endswith('.tsv.gz')), None)
-    features_file = next((f for f in files if f.startswith(prefix + 'features') and f.endswith('.tsv.gz')), None)
-    matrix_file = next((f for f in files if f.startswith(prefix + 'matrix') and f.endswith('.mtx.gz')), None)
+    # Find the files with optional prefix
+    barcodes_file = next((f for f in files if 'barcodes' in f and f.endswith('.tsv.gz')), None)
+    features_file = next((f for f in files if 'features' in f and f.endswith('.tsv.gz')), None)
+    matrix_file = next((f for f in files if 'matrix' in f and f.endswith('.mtx.gz')), None)
+      
     
     # Debug: print the identified files
     print("Identified barcodes file:", barcodes_file)
