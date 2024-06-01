@@ -189,7 +189,7 @@ def main():
 
     if args.umap:
         sys.stdout.write("Running UMAP for dimensionality reduction and visualization... \n")
-        umap_embedding = utils.umap_embedding(pca_results)
+        umap_embedding = utils.umap_embedding(adata)
         # Further actions with umap_embedding if needed
         sys.stdout.write("UMAP computation completed! \n\n")
         if args.visualize:
