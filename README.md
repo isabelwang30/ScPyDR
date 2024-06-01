@@ -73,8 +73,8 @@ A subset of the first row of bench_pca.txt (produced with `cat data_pca.txt | he
 
 The plots for PCA and UMAP from the benchmark dataset are shown below. 
 *Note: because UMAP is a stochastic process, the graph may have global differences. In other words, the local clusters will look similar, but they may be placed in different locations on the plot.*
-<img src="benchmark-data_pca_plot.png">
-<img src="benchmark-data_umap_plot.png">
+<img src="data_pca_plot.png">
+<img src="data_umap_plot.png">
 
 ## scPyDR Options<a name="Options"></a>
 scPyDR requires the following input file:
