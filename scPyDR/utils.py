@@ -278,7 +278,7 @@ def save_pca_results(outdir, filename_prefix, pca_results):
     """
     output_file = os.path.join(outdir, f"{filename_prefix}_pca.txt")
     np.savetxt(output_file, pca_results, delimiter="\t")
-    print(f"PCA results saved to {output_file}\n\n")
+    print(f"PCA results saved to {output_file}\n")
 
 def plot_pca_results(outdir, filename_prefix, pca_results):
     """
@@ -309,7 +309,7 @@ def plot_pca_results(outdir, filename_prefix, pca_results):
     plt.savefig(output_plot)
     plt.show()
     plt.close()
-    print(f"PCA plot saved to {output_plot}\n\n")
+    print(f"PCA plot saved to {output_plot}\n")
 
 def umap_embedding(adata, min_dist=0.1, n_components=2, n_epochs=200, learning_rate=1.0, n_neighbors=None):
     """
@@ -339,7 +339,7 @@ def umap_embedding(adata, min_dist=0.1, n_components=2, n_epochs=200, learning_r
     
     # Compute default number of neighbors if not specified by the user
     if n_neighbors is None:
-        # Use a heuristic based on the size of the data >10000 genes has different number of neighbors
+        # Use a heuristic based on the size of the data: >10000 genes has different number of neighbors
         n_neighbors = 15 if adatac.shape[0] > 10000 else 10
     
     # Compute nearest neighbors using scanpy's algorithm
@@ -389,4 +389,4 @@ def plot_umap_results(outdir, filename_prefix, umap_embedding):
     plt.savefig(output_plot)
     plt.show()
     plt.close()
-    print(f"UMAP plot saved to {output_plot}\n\n")
+    print(f"UMAP plot saved to {output_plot}\n")
