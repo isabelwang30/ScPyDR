@@ -181,10 +181,6 @@ def main():
             plt.tight_layout()  # Adjust layout to prevent overlapping labels
             plt.show()
 
-    # TRY LATER: 
-    # sys.stdout.write("Would you like to visualize the data in 2D? [y/n] \n")
-    # input()
-
     # -------------------- analysis and conclusion --------------------
 
     sys.stdout.write("Summarizing results...")
