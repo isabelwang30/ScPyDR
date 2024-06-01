@@ -326,6 +326,11 @@ def save_pca_results(outdir, filename_prefix, pca_results):
     -------
     None
     """
+    # parse filename_prefix in case user inputs a nested directory; need to get rid of /
+    if "/" in filename_prefix:
+        idx = filename_prefix.rindex("/")
+        filename_prefix = filename_prefix[idx+1:]
+    
     output_file = os.path.join(outdir, f"{filename_prefix}_pca.txt")
     np.savetxt(output_file, pca_results, delimiter="\t")
     print(f"PCA results saved to {output_file}")
@@ -354,6 +359,11 @@ def plot_pca_results(outdir, filename_prefix, pca_results):
     plt.ylabel('PC2', fontsize=14)
     plt.grid(True, linestyle='--', alpha=0.5)
     plt.tight_layout()
+
+    # parse filename_prefix in case user inputs a nested directory; need to get rid of /
+    if "/" in filename_prefix:
+        idx = filename_prefix.rindex("/")
+        filename_prefix = filename_prefix[idx+1:]
 
     output_plot = os.path.join(outdir, f"{filename_prefix}_pca_plot.png")
     plt.savefig(output_plot)
