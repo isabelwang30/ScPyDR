@@ -1,0 +1,3 @@
+# Benchmark Data
+
+The directory `benchmark_data` contains a subset of UCSD's sp'24 CSE 185 lab 6 data (10x barcodes, features, and matrix) used as an example to run scPyDR upon installation, as well as for benchmarking scPyDR's PCA and UMAP functions against scanpy's versions. These files are a subset of the GSM5114461_S6_A11 sample from the paper [Functional, metabolic and transcriptional maturation of human pancreatic islets derived from stem cells](https://www.nature.com/articles/s41587-022-01219-z.pdf). More specifically, this subset contains the first 300 rows and the first 300 columns (300 features and 300 cells) of the entire dataset.
