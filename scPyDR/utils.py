@@ -311,14 +311,14 @@ def plot_pca_results(outdir, filename_prefix, pca_results):
     plt.close()
     print(f"PCA plot saved to {output_plot}\n")
 
-def umap_embedding(adata, min_dist=0.1, n_components=2, n_epochs=200, learning_rate=1.0, n_neighbors=None):
+def umap_embedding(pca_results, min_dist=0.1, n_components=2, n_epochs=200, learning_rate=1.0, n_neighbors=None):
     """
     Compute UMAP embedding for visualization.
 
     Parameters
     ----------
-    adata : AnnData
-        Annotated data object containing the input data.
+    pca_results : np.ndarray
+        PCA-transformed data.
     min_dist : float, optional
         Minimum distance between points in the UMAP embedding (default is 0.1).
     n_components : int, optional
@@ -335,15 +335,16 @@ def umap_embedding(adata, min_dist=0.1, n_components=2, n_epochs=200, learning_r
     np.ndarray
         UMAP embedding of the input data.
     """
-    adatac = adata.copy()  # Make a copy to avoid modifying the original object
+    # Create a temporary AnnData object
+    adata_pca = sc.AnnData(X=pca_results)
     
     # Compute default number of neighbors if not specified by the user
     if n_neighbors is None:
         # Use a heuristic based on the size of the data: >10000 genes has different number of neighbors
-        n_neighbors = 15 if adatac.shape[0] > 10000 else 10
+        n_neighbors = 15 if adata_pca.shape[0] > 10000 else 10
     
     # Compute nearest neighbors using scanpy's algorithm
-    sc.pp.neighbors(adatac, n_neighbors=n_neighbors)
+    sc.pp.neighbors(adata_pca, n_neighbors=n_neighbors)
     
     # Create UMAP object
     reducer = umap.UMAP(
@@ -357,7 +358,7 @@ def umap_embedding(adata, min_dist=0.1, n_components=2, n_epochs=200, learning_r
     )
     
     # Fit and transform the data
-    embedding = reducer.fit_transform(adata.X)
+    embedding = reducer.fit_transform(adata_pca.X)
     return embedding
 
 def plot_umap_results(outdir, filename_prefix, umap_embedding):
