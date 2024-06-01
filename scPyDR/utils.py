@@ -237,7 +237,6 @@ class scpydrPCA:
         eigenvalues = eigenvalues[sort_idx]
         eigenvectors = eigenvectors[:, sort_idx]  # Column i is the i'th eigenvector
         self.components = eigenvectors[:self.nComp]  # Store subset of eigenvectors as the PCs of our data
-        print("past eigen stuff")
         # Explained variance ratio
         self.perc_explained_var = (np.sum(eigenvalues[:self.nComp]) / np.sum(eigenvalues)) * 100  # For analysis later
 
