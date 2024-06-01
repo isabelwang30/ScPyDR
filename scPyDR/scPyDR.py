@@ -118,8 +118,7 @@ def main():
         outdir += "/"
     if not os.path.exists(outdir):
         os.mkdir(outdir)
-    outf = open(outdir + "scpydr_results.txt", "w")
-    
+        
     sys.stdout.write("Welcome to scPyDR! Starting analysis.\n\n")
 
     # -------------------- load and preprocess data --------------------
