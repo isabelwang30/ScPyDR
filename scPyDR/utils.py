@@ -259,6 +259,58 @@ class scpydrPCA:
         """
         X_std = (X - self.mean) / self.normalize 
         return np.dot(X_std, self.components.T)
+    
+def save_pca_results(outdir, filename_prefix, pca_results):
+    """
+    Save PCA results to a file.
+
+    Parameters
+    ----------
+    outdir : str
+        Output directory to save the file.
+    filename_prefix : str
+        Prefix for the output filename.
+    pca_results : np.ndarray
+        PCA results to save.
+
+    Returns
+    -------
+    None
+    """
+    output_file = os.path.join(outdir, f"{filename_prefix}_pca.txt")
+    np.savetxt(output_file, pca_results, delimiter="\t")
+    print(f"PCA results saved to {output_file}\n\n")
+
+def plot_pca_results(outdir, filename_prefix, pca_results):
+    """
+    Plot PCA results and save the plot to a file.
+
+    Parameters
+    ----------
+    outdir : str
+        Output directory to save the plot.
+    filename_prefix : str
+        Prefix for the output filename.
+    pca_results : np.ndarray
+        PCA results to plot.
+
+    Returns
+    -------
+    None
+    """
+    plt.figure(figsize=(8, 6))
+    plt.scatter(pca_results[:, 0], pca_results[:, 1], s=20, c='b', alpha=0.5)
+    plt.title('PCA Plot', fontsize=16)
+    plt.xlabel('PC1', fontsize=14)
+    plt.ylabel('PC2', fontsize=14)
+    plt.grid(True, linestyle='--', alpha=0.5)
+    plt.tight_layout()
+
+    output_plot = os.path.join(outdir, f"{filename_prefix}_pca_plot.png")
+    plt.savefig(output_plot)
+    plt.show()
+    plt.close()
+    print(f"PCA plot saved to {output_plot}\n\n")
 
 def umap_embedding(adata, min_dist=0.1, n_components=2, n_epochs=200, learning_rate=1.0, n_neighbors=None):
     """
@@ -308,31 +360,10 @@ def umap_embedding(adata, min_dist=0.1, n_components=2, n_epochs=200, learning_r
     # Fit and transform the data
     embedding = reducer.fit_transform(adata.X)
     return embedding
-    
-def save_pca_results(outdir, filename_prefix, pca_results):
-    """
-    Save PCA results to a file.
 
-    Parameters
-    ----------
-    outdir : str
-        Output directory to save the file.
-    filename_prefix : str
-        Prefix for the output filename.
-    pca_results : np.ndarray
-        PCA results to save.
-
-    Returns
-    -------
-    None
+def plot_umap_results(outdir, filename_prefix, umap_embedding):
     """
-    output_file = os.path.join(outdir, f"{filename_prefix}_pca.txt")
-    np.savetxt(output_file, pca_results, delimiter="\t")
-    print(f"PCA results saved to {output_file}")
-
-def plot_pca_results(outdir, filename_prefix, pca_results):
-    """
-    Plot PCA results and save the plot to a file.
+    Plot UMAP results and save the plot to a file.
 
     Parameters
     ----------
@@ -340,23 +371,23 @@ def plot_pca_results(outdir, filename_prefix, pca_results):
         Output directory to save the plot.
     filename_prefix : str
         Prefix for the output filename.
-    pca_results : np.ndarray
-        PCA results to plot.
+    umap_embedding : np.ndarray
+        UMAP results to plot.
 
     Returns
     -------
     None
     """
-    plt.figure(figsize=(8, 6))
-    plt.scatter(pca_results[:, 0], pca_results[:, 1], s=20, c='b', alpha=0.5)
-    plt.title('PCA Plot', fontsize=16)
-    plt.xlabel('PC1', fontsize=14)
-    plt.ylabel('PC2', fontsize=14)
-    plt.grid(True, linestyle='--', alpha=0.5)
-    plt.tight_layout()
-
-    output_plot = os.path.join(outdir, f"{filename_prefix}_pca_plot.png")
+    fig, ax = plt.subplots(figsize=(8, 6))  # Set the figure size
+    ax.scatter(umap_embedding[:, 0], umap_embedding[:, 1], s=20, c='b', alpha=0.5)  # Adjust marker size, color, and transparency
+    ax.set_title('UMAP Embedding', fontsize=16)  # Set title and adjust font size
+    ax.set_xlabel('UMAP 1', fontsize=14)  # Set x-axis label and adjust font size
+    ax.set_ylabel('UMAP 2', fontsize=14)  # Set y-axis label and adjust font size
+    ax.grid(True, linestyle='--', alpha=0.5)  # Add grid with dashed lines and transparency
+    plt.tight_layout()  # Adjust layout to prevent overlapping labels
+    
+    output_plot = os.path.join(outdir, f"{filename_prefix}_umap_plot.png")
     plt.savefig(output_plot)
+    plt.show()
     plt.close()
-    print(f"PCA plot saved to {output_plot}")
-
+    print(f"UMAP plot saved to {output_plot}\n\n")

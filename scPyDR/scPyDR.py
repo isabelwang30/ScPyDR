@@ -154,7 +154,7 @@ def main():
 
     sys.stdout.write("Data files successfully prepared! \n\n")    
 
-    # -------------------- initialize, fit and transform data using pca --------------------
+    # -------------------- initialize, fit and transform data using PCA --------------------
 
     sys.stdout.write("Running PCA for dimensionality reduction... \n")
 
@@ -173,14 +173,19 @@ def main():
     sys.stdout.write("New PCs computed. \n")
     pca_results = pca.transform(df)  # fit data to new PCs
     sys.stdout.write("Original data successfully projected onto the new PCs! \n\n")
-    
-    filename_prefix = os.path.basename(args.datadir)[:5]
+
+    # -------------------- save and plot PCA results --------------------
+
+    filename_prefix = os.path.basename(args.datadir)
 
     # Save PCA results to file
     utils.save_pca_results(outdir, filename_prefix, pca_results)
 
     # Plot PCA results and save the plot to a file
+    sys.stdout.write("Plotting top two PCs... \n")
     utils.plot_pca_results(outdir, filename_prefix, pca_results)
+
+    # -------------------- compute and plot UMAP embedding --------------------
 
     if args.umap:
         sys.stdout.write("Running UMAP for dimensionality reduction and visualization... \n")
@@ -189,14 +194,10 @@ def main():
         sys.stdout.write("UMAP computation completed! \n\n")
         if args.visualize:
             # Plot the UMAP embedding
-            fig, ax = plt.subplots(figsize=(8, 6))  # Set the figure size
-            ax.scatter(umap_embedding[:, 0], umap_embedding[:, 1], s=20, c='b', alpha=0.5)  # Adjust marker size, color, and transparency
-            ax.set_title('UMAP Embedding', fontsize=16)  # Set title and adjust font size
-            ax.set_xlabel('UMAP 1', fontsize=14)  # Set x-axis label and adjust font size
-            ax.set_ylabel('UMAP 2', fontsize=14)  # Set y-axis label and adjust font size
-            ax.grid(True, linestyle='--', alpha=0.5)  # Add grid with dashed lines and transparency
-            plt.tight_layout()  # Adjust layout to prevent overlapping labels
-            plt.show()
+            sys.stdout.write("Plotting UMAP embedding... \n")
+            utils.plot_umap_results(outdir, filename_prefix, umap_embedding)
+
+    # -------------------- save and plot UMAP embedding --------------------
 
     # TRY LATER: 
     # sys.stdout.write("Would you like to visualize the data in 2D? [y/n] \n")
