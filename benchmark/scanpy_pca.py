@@ -13,6 +13,8 @@ def main():
 
     # Run PCA
     sc.pp.pca(adata)
+    # Plot top two PCs
+    sc.pl.pca(adata)
 
     # Save results
     adata.write(args.output)
