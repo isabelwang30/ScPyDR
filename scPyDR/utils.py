@@ -307,7 +307,6 @@ def plot_pca_results(outdir, filename_prefix, pca_results):
 
     output_plot = os.path.join(outdir, f"{filename_prefix}_pca_plot.png")
     plt.savefig(output_plot)
-    plt.show()
     plt.close()
     print(f"PCA plot saved to {output_plot}\n")
 
@@ -387,6 +386,5 @@ def plot_umap_results(outdir, filename_prefix, umap_embedding):
     
     output_plot = os.path.join(outdir, f"{filename_prefix}_umap_plot.png")
     plt.savefig(output_plot)
-    plt.show()
     plt.close()
     print(f"UMAP plot saved to {output_plot}\n")
