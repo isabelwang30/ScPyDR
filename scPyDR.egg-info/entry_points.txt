@@ -1,2 +1,0 @@
-[console_scripts]
-scpydr = scPyDR.scPyDR:main
