@@ -12,6 +12,7 @@ from anndata import AnnData
 import scanpy as sc
 import umap
 import os
+import leidenalg
 
 class bcolors:
     HEADER = '\033[95m'
