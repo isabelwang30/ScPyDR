@@ -7,6 +7,7 @@ chmod +x "$0"  # "$0" represents the path to the current script
 # Define input variables
 DATADIR="benchmark"
 
+# -------------------- PCA --------------------
 # Run scpydr PCA
 echo "Running scpydr PCA..."
 # get time output while discarding scpydr terminal output
@@ -18,5 +19,3 @@ echo  # Insert empty line after scpydr time output
 echo "Running scanpy PCA..."
 echo "Total scanpy PCA time:"
 time python $DATADIR/scanpy_pca.py $DATADIR -o $DATADIR/scanpy_results
-# Compare results if needed
-# Add your comparison logic here
