@@ -14,21 +14,22 @@ echo "Running scpydr PCA..."
 # get time output while discarding scpydr terminal output
 echo "Total scpydr PCA time:"
 time scpydr $DATADIR -o $BENCHDIR/scpydr_results > /dev/null 2>&1
-echo  # Insert empty line after scpydr time output
+echo  # Insert empty line after time output
 
 # Run scanpy PCA
 echo "Running scanpy PCA..."
 echo "Total scanpy PCA time:"
-time python $BENCHDIR/scanpy_pca.py $DATADIR -o $BENCHDIR/scanpy_results
+time python $BENCHDIR/scanpy_pca.py $DATADIR -o $BENCHDIR/scanpy_results > /dev/null 2>&1
+echo  # Insert empty line after time output
 
 # -------------------- UMAP --------------------
 # Run scpydr UMAP
 echo "Running scpydr UMAP..."
 echo "Total scpydr UMAP time:"
-time python $BENCHDIR/scpydr_umap.py $DATADIR -o $BENCHDIR/scpydr_results
-echo  # Insert empty line after scpydr time output
+time python $BENCHDIR/scpydr_umap.py $DATADIR -o $BENCHDIR/scpydr_results > /dev/null 2>&1
+echo  # Insert empty line after time output
 
 # Run scanpy UMAP
 echo "Running scanpy UMAP..."
 echo "Total scanpy UMAP time:"
-time python $BENCHDIR/scanpy_umap.py $DATADIR
+time python $BENCHDIR/scanpy_umap.py $DATADIR > /dev/null 2>&1

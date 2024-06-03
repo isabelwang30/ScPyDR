@@ -1,5 +1,6 @@
 import scanpy as sc
 import argparse
+import leidenalg
 
 def main():
     # Parse command-line arguments
@@ -13,14 +14,14 @@ def main():
     # Compute neighborhood graphs
     sc.pp.neighbors(adata) 
 
-    # Cluster cells based on expression profiles
-    sc.tl.leiden(adata)
+    # Cluster cells based on expression profiles with the igraph backend
+    sc.tl.leiden(adata, flavor="igraph", n_iterations=2, directed=False)
 
     # Compute UMAP embedding
     sc.tl.umap(adata) 
 
     # Make a UMAP plot
-    sc.pl.umap(adata)
+    sc.pl.umap(adata, save=True, show=False)
 
 if __name__ == "__main__":
     main()
