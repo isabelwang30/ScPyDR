@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import anndata as ad
 from anndata import AnnData
 import scanpy as sc
-import umap
+import umap.umap_ as umap
 import os
 
 class bcolors:
@@ -236,7 +236,7 @@ class scpydrPCA:
         sort_idx = np.argsort(eigenvalues)[::-1]
         eigenvalues = eigenvalues[sort_idx]
         eigenvectors = eigenvectors[:, sort_idx]  # Column i is the i'th eigenvector
-        self.components = eigenvectors[:self.nComp]  # Store subset of eigenvectors as the PCs of our data
+        self.components = eigenvectors[:, :self.nComp]  # Store subset of eigenvectors as the PCs of our data
         # Explained variance ratio
         self.perc_explained_var = (np.sum(eigenvalues[:self.nComp]) / np.sum(eigenvalues)) * 100  # For analysis later
 
@@ -257,7 +257,7 @@ class scpydrPCA:
             Transformed data matrix made by projecting raw counts onto the new principal component axes.
         """
         X_std = (X - self.mean) / self.normalize 
-        return np.dot(X_std, self.components.T)
+        return np.dot(X_std, self.components)
     
 def save_pca_results(outdir, filename_prefix, pca_results):
     """
@@ -388,6 +388,5 @@ def plot_umap_results(outdir, filename_prefix, umap_embedding):
     
     output_plot = os.path.join(outdir, f"{filename_prefix}_umap_plot.png")
     plt.savefig(output_plot)
-    plt.show()
     plt.close()
     print(f"UMAP plot saved to {output_plot}\n")
