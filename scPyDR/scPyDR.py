@@ -197,12 +197,6 @@ def main():
             sys.stdout.write("Plotting UMAP embedding... \n")
             utils.plot_umap_results(outdir, filename_prefix, umap_embedding)
 
-    # -------------------- save and plot UMAP embedding --------------------
-
-    # TRY LATER: 
-    # sys.stdout.write("Would you like to visualize the data in 2D? [y/n] \n")
-    # input()
-
     # -------------------- analysis and conclusion --------------------
 
     sys.stdout.write("Summarizing results...\n")
