@@ -19,3 +19,15 @@ echo  # Insert empty line after scpydr time output
 echo "Running scanpy PCA..."
 echo "Total scanpy PCA time:"
 time python $DATADIR/scanpy_pca.py $DATADIR -o $DATADIR/scanpy_results
+
+# -------------------- UMAP --------------------
+# Run scpydr UMAP
+echo "Running scpydr UMAP..."
+echo "Total scpydr UMAP time:"
+time python $DATADIR/scpydr_umap.py $DATADIR -o $DATADIR/scpydr_results
+echo  # Insert empty line after scpydr time output
+
+# Run scanpy UMAP
+echo "Running scanpy UMAP..."
+echo "Total scanpy UMAP time:"
+time python $DATADIR/scanpy_umap.py $DATADIR
