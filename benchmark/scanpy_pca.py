@@ -11,8 +11,8 @@ def main():
     # Load data
     adata = sc.read_10x_mtx(args.datadir)
 
-    # Run PCA
-    sc.pp.pca(adata)
+    # Run PCA with 10 PCs
+    sc.pp.pca(adata, n_comps=10)
     # Plot top two PCs
     sc.pl.pca(adata, save=True, show=False)
 

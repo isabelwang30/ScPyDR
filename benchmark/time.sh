@@ -13,12 +13,14 @@ DATADIR="benchmark/data"
 echo "Running scpydr PCA..."
 # get time output while discarding scpydr terminal output
 echo "Total scpydr PCA time:"
-time scpydr $DATADIR -o $BENCHDIR/scpydr_results > /dev/null 2>&1
+# run with 10 PCs for comparison
+time scpydr $DATADIR -o $BENCHDIR/scpydr_results -n 10 > /dev/null 2>&1
 echo  # Insert empty line after time output
 
 # Run scanpy PCA
 echo "Running scanpy PCA..."
 echo "Total scanpy PCA time:"
+# running with 10 PCs for comparison
 time python $BENCHDIR/scanpy_pca.py $DATADIR -o $BENCHDIR/scanpy_results > /dev/null 2>&1
 echo  # Insert empty line after time output
 
