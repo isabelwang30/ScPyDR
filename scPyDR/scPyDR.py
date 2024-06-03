@@ -132,12 +132,6 @@ def main():
 
     sys.stdout.write("Loading 10x Genomics data files...\n")
 
-    """
-    NOTES: 
-    - metadata not used. should we have an option to call metadata into the function?
-    - errors are very vague. try to make more user friendly/offer next steps to user.
-    """
-
     try:
         adata = utils.load(args.datadir, prefix="", cache=True)
     except Exception:
