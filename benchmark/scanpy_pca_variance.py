@@ -20,7 +20,9 @@ def main():
     explained_var_ratio = adata.uns['pca']['variance_ratio']
     explained_var_ratio_n = explained_var_ratio[:args.nComp].sum()
     explained_var_perc_n = round(explained_var_ratio_n*100, 2)
-    print(f"Total explained variance for the first {args.nComp} components: {explained_var_perc_n}%")
+    print("Tool: scanpy.pp.pca")
+    print(f"Number of principal componenets: {args.nComp}")
+    print(f"Total explained variance: {explained_var_perc_n}%")
     
 
 if __name__ == "__main__":

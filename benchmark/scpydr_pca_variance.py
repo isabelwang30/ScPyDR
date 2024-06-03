@@ -43,7 +43,9 @@ def main(datadir, n):
         pass
 
     # Print your desired output
-    print(f"Total explained variance for the first {args.nComp} components: {explained_var_perc_n}%")
+    print("Tool: scPyDR")
+    print(f"Number of principal componenets: {args.nComp}")
+    print(f"Total explained variance: {explained_var_perc_n}%")
     
 
 if __name__ == "__main__":
