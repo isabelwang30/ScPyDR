@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import anndata as ad
 from anndata import AnnData
 import scanpy as sc
-import umap
+import umap.umap_ as umap
 import os
 
 class bcolors:
