@@ -1,7 +1,7 @@
-# Ignore the virtual environment directory
+# virtual environment directory
 env/
 
-# Ignore Jupyter Notebook checkpoints
+# Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
 # scanpy generated figures
