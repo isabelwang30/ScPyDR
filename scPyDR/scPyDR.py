@@ -182,6 +182,12 @@ def main():
     # -------------------- compute and plot UMAP embedding --------------------
 
     if args.umap:
+        # reload adata
+        try:
+            adata = utils.load(args.datadir, prefix="", cache=True)
+        except Exception:
+            utils.ERROR(">> Failed to load 10x Genomics data into an AnnData object. Please check: \n 1) path to directory \n 2) directory contains properly formatted 10x Genomics files. \n Read more on 10x Genomics files here: https://www.10xgenomics.com/support/software/space-ranger/latest/advanced/hdf5-feature-barcode-matrix-format")
+
         sys.stdout.write("Running UMAP for dimensionality reduction and visualization... \n")
         umap_embedding, cluster_labels = utils.umap_embedding(adata)
         # Further actions with umap_embedding if needed
