@@ -132,12 +132,6 @@ def main():
 
     sys.stdout.write("Loading 10x Genomics data files...\n")
 
-    """
-    NOTES: 
-    - metadata not used. should we have an option to call metadata into the function?
-    - errors are very vague. try to make more user friendly/offer next steps to user.
-    """
-
     try:
         adata = utils.load(args.datadir, prefix="", cache=True)
     except Exception:
@@ -189,19 +183,13 @@ def main():
 
     if args.umap:
         sys.stdout.write("Running UMAP for dimensionality reduction and visualization... \n")
-        umap_embedding = utils.umap_embedding(adata)
+        umap_embedding, cluster_labels = utils.umap_embedding(adata)
         # Further actions with umap_embedding if needed
         sys.stdout.write("UMAP computation completed! \n\n")
         if args.visualize:
             # Plot the UMAP embedding
             sys.stdout.write("Plotting UMAP embedding... \n")
-            utils.plot_umap_results(outdir, filename_prefix, umap_embedding)
-
-    # -------------------- save and plot UMAP embedding --------------------
-
-    # TRY LATER: 
-    # sys.stdout.write("Would you like to visualize the data in 2D? [y/n] \n")
-    # input()
+            utils.plot_umap_results(outdir, filename_prefix, umap_embedding, cluster_labels)
 
     # -------------------- analysis and conclusion --------------------
 

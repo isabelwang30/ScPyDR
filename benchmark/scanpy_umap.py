@@ -21,7 +21,7 @@ def main():
     sc.tl.umap(adata) 
 
     # Make a UMAP plot
-    sc.pl.umap(adata, save=True, show=False)
+    sc.pl.umap(adata, color="leiden", save=True, show=False)
 
 if __name__ == "__main__":
     main()

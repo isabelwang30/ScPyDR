@@ -183,13 +183,13 @@ def main():
 
     if args.umap:
         sys.stdout.write("Running UMAP for dimensionality reduction and visualization... \n")
-        umap_embedding = utils.umap_embedding(adata)
+        umap_embedding, cluster_labels = utils.umap_embedding(adata)
         # Further actions with umap_embedding if needed
         sys.stdout.write("UMAP computation completed! \n\n")
         if args.visualize:
             # Plot the UMAP embedding
             sys.stdout.write("Plotting UMAP embedding... \n")
-            utils.plot_umap_results(outdir, filename_prefix, umap_embedding)
+            utils.plot_umap_results(outdir, filename_prefix, umap_embedding, cluster_labels)
 
     # -------------------- analysis and conclusion --------------------
 

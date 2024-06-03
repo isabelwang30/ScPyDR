@@ -10,8 +10,10 @@ import matplotlib.pyplot as plt
 import anndata as ad
 from anndata import AnnData
 import scanpy as sc
-import umap
+import umap.umap_ as umap
+import leidenalg
 import os
+from matplotlib.colors import ListedColormap, BoundaryNorm
 
 class bcolors:
     HEADER = '\033[95m'
@@ -236,7 +238,7 @@ class scpydrPCA:
         sort_idx = np.argsort(eigenvalues)[::-1]
         eigenvalues = eigenvalues[sort_idx]
         eigenvectors = eigenvectors[:, sort_idx]  # Column i is the i'th eigenvector
-        self.components = eigenvectors[:self.nComp]  # Store subset of eigenvectors as the PCs of our data
+        self.components = eigenvectors[:, :self.nComp]  # Store subset of eigenvectors as the PCs of our data
         # Explained variance ratio
         self.perc_explained_var = (np.sum(eigenvalues[:self.nComp]) / np.sum(eigenvalues)) * 100  # For analysis later
 
@@ -257,7 +259,7 @@ class scpydrPCA:
             Transformed data matrix made by projecting raw counts onto the new principal component axes.
         """
         X_std = (X - self.mean) / self.normalize 
-        return np.dot(X_std, self.components.T)
+        return np.dot(X_std, self.components)
     
 def save_pca_results(outdir, filename_prefix, pca_results):
     """
@@ -333,17 +335,22 @@ def umap_embedding(adata, min_dist=0.1, n_components=2, n_epochs=200, learning_r
     -------
     np.ndarray
         UMAP embedding of the input data.
+    pandas.Series
+        Cluster labels from the Leiden algorithm.
     """
     adatac = adata.copy()  # Make a copy to avoid modifying the original object
     
     # Compute default number of neighbors if not specified by the user
     if n_neighbors is None:
-        # Use a heuristic based on the size of the data: >10000 genes has different number of neighbors
+        # Use a heuristic based on the size of the data
         n_neighbors = 15 if adatac.shape[0] > 10000 else 10
     
     # Compute nearest neighbors using scanpy's algorithm
     sc.pp.neighbors(adatac, n_neighbors=n_neighbors)
     
+    # Cluster cells based on expression profiles with the igraph backend
+    sc.tl.leiden(adatac, flavor="igraph", n_iterations=2, directed=False)
+
     # Create UMAP object
     reducer = umap.UMAP(
         n_neighbors=n_neighbors,
@@ -356,10 +363,10 @@ def umap_embedding(adata, min_dist=0.1, n_components=2, n_epochs=200, learning_r
     )
     
     # Fit and transform the data
-    embedding = reducer.fit_transform(adata.X)
-    return embedding
+    embedding = reducer.fit_transform(adatac.X)
+    return embedding, adatac.obs['leiden']
 
-def plot_umap_results(outdir, filename_prefix, umap_embedding):
+def plot_umap_results(outdir, filename_prefix, umap_embedding, cluster_labels):
     """
     Plot UMAP results and save the plot to a file.
 
@@ -371,19 +378,36 @@ def plot_umap_results(outdir, filename_prefix, umap_embedding):
         Prefix for the output filename.
     umap_embedding : np.ndarray
         UMAP results to plot.
+    cluster_labels : pandas.Series
+        Cluster labels for coloring the plot.
 
     Returns
     -------
     None
     """
+    # Extract only the cluster labels without the index, convert to int
+    cluster_labels = cluster_labels.values.astype(int)
+
+    # Define a discrete colormap
+    num_clusters = len(np.unique(cluster_labels))
+    cmap = ListedColormap(plt.cm.get_cmap('viridis', num_clusters).colors)
+
+    # Plot the UMAP embedding
     fig, ax = plt.subplots(figsize=(8, 6))  # Set the figure size
-    ax.scatter(umap_embedding[:, 0], umap_embedding[:, 1], s=20, c='b', alpha=0.5)  # Adjust marker size, color, and transparency
+    scatter = ax.scatter(umap_embedding[:, 0], umap_embedding[:, 1], s=20, c=cluster_labels, cmap=cmap, alpha=0.5)  # Adjust marker size, color, and transparency
     ax.set_title('UMAP Embedding', fontsize=16)  # Set title and adjust font size
     ax.set_xlabel('UMAP 1', fontsize=14)  # Set x-axis label and adjust font size
     ax.set_ylabel('UMAP 2', fontsize=14)  # Set y-axis label and adjust font size
     ax.grid(True, linestyle='--', alpha=0.5)  # Add grid with dashed lines and transparency
+
+    # Create a legend with discrete dots for each cluster
+    handles = []
+    for cluster in np.unique(cluster_labels):
+        handles.append(ax.scatter([], [], s=50, c=[cmap(cluster)], alpha=0.5, label=cluster))
+    ax.legend(handles=handles, title="Clusters", loc='best')
+
     plt.tight_layout()  # Adjust layout to prevent overlapping labels
-    
+
     output_plot = os.path.join(outdir, f"{filename_prefix}_umap_plot.png")
     plt.savefig(output_plot)
     plt.close()

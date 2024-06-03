@@ -13,8 +13,8 @@ def main():
     adata = sc.read_10x_mtx(args.datadir)
 
     # Call scPyDR UMAP functions
-    umap_embedding_result = umap_embedding(adata)
-    plot_umap_results(args.outdir, "benchmark", umap_embedding_result)
+    umap_embedding_result, cluster_labels = umap_embedding(adata)
+    plot_umap_results(args.outdir, "benchmark", umap_embedding_result, cluster_labels)
 
 if __name__ == "__main__":
     main()
