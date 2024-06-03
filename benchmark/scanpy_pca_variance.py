@@ -14,7 +14,7 @@ def main():
     adata = sc.read_10x_mtx(args.datadir)
     
     # Run PCA
-    sc.pp.pca(adata)
+    sc.pp.pca(adata, n_comps=args.nComp)
     
     # Calculate percent variance
     explained_var_ratio = adata.uns['pca']['variance_ratio']
