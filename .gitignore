@@ -6,3 +6,6 @@ env/
 
 # scanpy generated figures
 figures/
+
+# Distribution / packaging
+build/
