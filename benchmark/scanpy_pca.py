@@ -14,7 +14,7 @@ def main():
     # Run PCA
     sc.pp.pca(adata)
     # Plot top two PCs
-    sc.pl.pca(adata)
+    sc.pl.pca(adata, save=True)
 
     # Save results
     adata.write(args.output)
