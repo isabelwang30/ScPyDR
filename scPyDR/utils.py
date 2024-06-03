@@ -236,7 +236,7 @@ class scpydrPCA:
         sort_idx = np.argsort(eigenvalues)[::-1]
         eigenvalues = eigenvalues[sort_idx]
         eigenvectors = eigenvectors[:, sort_idx]  # Column i is the i'th eigenvector
-        self.components = eigenvectors[:self.nComp]  # Store subset of eigenvectors as the PCs of our data
+        self.components = eigenvectors[:, :self.nComp]  # Store subset of eigenvectors as the PCs of our data
         # Explained variance ratio
         self.perc_explained_var = (np.sum(eigenvalues[:self.nComp]) / np.sum(eigenvalues)) * 100  # For analysis later
 
@@ -257,7 +257,7 @@ class scpydrPCA:
             Transformed data matrix made by projecting raw counts onto the new principal component axes.
         """
         X_std = (X - self.mean) / self.normalize 
-        return np.dot(X_std, self.components.T)
+        return np.dot(X_std, self.components)
     
 def save_pca_results(outdir, filename_prefix, pca_results):
     """
