@@ -21,7 +21,7 @@ def main():
     explained_var_ratio_n = explained_var_ratio[:args.nComp].sum()
     explained_var_perc_n = round(explained_var_ratio_n*100, 2)
     print("Tool: scanpy.pp.pca")
-    print(f"Number of principal components: {args.nComp}")
+    print(f"Number of principal componenets: {args.nComp}")
     print(f"Total explained variance: {explained_var_perc_n}%")
     
 

@@ -9,3 +9,6 @@ figures/
 
 # Distribution / packaging
 build/
+lib/
+*.egg
+*.egg-info/

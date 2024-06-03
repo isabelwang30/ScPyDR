@@ -132,12 +132,6 @@ def main():
 
     sys.stdout.write("Loading 10x Genomics data files...\n")
 
-    """
-    NOTES: 
-    - metadata not used. should we have an option to call metadata into the function?
-    - errors are very vague. try to make more user friendly/offer next steps to user.
-    """
-
     try:
         adata = utils.load(args.datadir, prefix="", cache=True)
     except Exception:
@@ -188,20 +182,20 @@ def main():
     # -------------------- compute and plot UMAP embedding --------------------
 
     if args.umap:
+        # reload adata
+        try:
+            adata = utils.load(args.datadir, prefix="", cache=True)
+        except Exception:
+            utils.ERROR(">> Failed to load 10x Genomics data into an AnnData object. Please check: \n 1) path to directory \n 2) directory contains properly formatted 10x Genomics files. \n Read more on 10x Genomics files here: https://www.10xgenomics.com/support/software/space-ranger/latest/advanced/hdf5-feature-barcode-matrix-format")
+
         sys.stdout.write("Running UMAP for dimensionality reduction and visualization... \n")
-        umap_embedding = utils.umap_embedding(adata)
+        umap_embedding, cluster_labels = utils.umap_embedding(adata)
         # Further actions with umap_embedding if needed
         sys.stdout.write("UMAP computation completed! \n\n")
         if args.visualize:
             # Plot the UMAP embedding
             sys.stdout.write("Plotting UMAP embedding... \n")
-            utils.plot_umap_results(outdir, filename_prefix, umap_embedding)
-
-    # -------------------- save and plot UMAP embedding --------------------
-
-    # TRY LATER: 
-    # sys.stdout.write("Would you like to visualize the data in 2D? [y/n] \n")
-    # input()
+            utils.plot_umap_results(outdir, filename_prefix, umap_embedding, cluster_labels)
 
     # -------------------- analysis and conclusion --------------------
 
