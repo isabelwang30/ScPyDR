@@ -1,6 +1,6 @@
 # Analysis
 
-scPyDR PCA and UMAP were used to analyze one dataset (healthy mouse colon sample GSM8217725) from the paper: [Single-cell RNA sequencing of healthy mouse colon and mouse colon with acute or chronic colitis induced by DSS](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE264408). 
+`scPyDR`'s PCA and UMAP were used to analyze one dataset (healthy mouse colon sample GSM8217725) from the paper: [Single-cell RNA sequencing of healthy mouse colon and mouse colon with acute or chronic colitis induced by DSS](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE264408). 
 
 The features, barcode, and matrix files for the dataset we used can be downloaded [here](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217725). Due to GitHub's storage constraints, the data files are not included here. To run the same analysis, please download the files to your local machine.
 
