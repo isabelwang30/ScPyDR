@@ -1,5 +1,5 @@
 #!/bin/bash
-# run with bash benchmark/pca_variance.sh
+# from outer scPyDR dir: run with bash benchmark/pca_variance.sh
 
 # Make this script executable
 chmod +x "$0"  # "$0" represents the path to the current script
