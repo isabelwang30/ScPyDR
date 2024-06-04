@@ -12,3 +12,7 @@ build/
 lib/
 *.egg
 *.egg-info/
+
+# outputs from benchmarking
+benchmark/scpydr_results
+benchmark/scpydr_results/
