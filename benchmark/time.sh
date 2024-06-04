@@ -34,4 +34,4 @@ echo  # Insert empty line after time output
 # Run scanpy UMAP
 echo "Running scanpy UMAP..."
 echo "Total scanpy UMAP time:"
-time python $BENCHDIR/scanpy_umap.py $DATADIR > /dev/null 2>&1
+time python $BENCHDIR/scanpy_umap.py $DATADIR -o $BENCHDIR/scanpy_results > /dev/null 2>&1
