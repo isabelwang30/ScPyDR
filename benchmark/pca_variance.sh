@@ -5,15 +5,15 @@
 chmod +x "$0"  # "$0" represents the path to the current script
 
 # Define input variables
-DATADIR="data"
+DATADIR="benchmark/data"
 
 
 # Run scpydr PCA
 echo "Running scpydr PCA..."
-python scpydr_pca_variance.py $DATADIR -n 10
+python benchmark/scpydr_pca_variance.py $DATADIR -n 10
 echo  # Insert empty line after scpydr output
 
 
 # Run scanpy PCA
 echo "Running scanpy PCA..."
-python scanpy_pca_variance.py $DATADIR -n 10
+python benchmark/scanpy_pca_variance.py $DATADIR -n 10
