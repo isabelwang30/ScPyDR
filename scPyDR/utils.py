@@ -345,8 +345,11 @@ def umap_embedding(adata, min_dist=0.1, n_components=2, n_epochs=200, learning_r
         # Use a heuristic based on the size of the data
         n_neighbors = 15 if adatac.shape[0] > 10000 else 10
     
+    # Perform PCA to reduce dimensions to 50
+    sc.pp.pca(adatac, n_comps=50)
+
     # Compute nearest neighbors using scanpy's algorithm
-    sc.pp.neighbors(adatac, n_neighbors=n_neighbors)
+    sc.pp.neighbors(adatac, n_neighbors=n_neighbors, use_rep='X_pca')
     
     # Cluster cells based on expression profiles with the igraph backend
     sc.tl.leiden(adatac, flavor="igraph", n_iterations=2, directed=False)
@@ -363,8 +366,12 @@ def umap_embedding(adata, min_dist=0.1, n_components=2, n_epochs=200, learning_r
     )
     
     # Fit and transform the data
-    embedding = reducer.fit_transform(adatac.X)
-    return embedding, adatac.obs['leiden']
+    embedding = reducer.fit_transform(adatac.obsm['X_pca'])
+    
+    # Retrieve cluster labels
+    cluster_labels = adatac.obs['leiden']
+    
+    return embedding, cluster_labels
 
 def plot_umap_results(outdir, filename_prefix, umap_embedding, cluster_labels):
     """
