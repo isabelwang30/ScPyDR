@@ -83,7 +83,6 @@ def load(datadir, prefix="", cache=True):
             var_names='gene_symbols' if 'features.tsv.gz' in features_file else 'gene_ids',
             cache=cache
         )
-        print("Data loaded successfully.\n")
     except Exception as e:
         ERROR(f"An error occurred while reading the data: {e}")
     finally:
@@ -120,34 +119,36 @@ def preprocess(adata, min_genes=200, min_cells=5,
     AnnData
         Preprocessed AnnData object.
     """
-    sc.pp.filter_cells(adata, min_genes=min_genes, inplace=True)
-    sc.pp.filter_genes(adata, min_cells=min_cells, inplace=True)
+    adatac = adata.copy()  # Make a copy to avoid modifying the original object
+
+    sc.pp.filter_cells(adatac, min_genes=min_genes, inplace=True)
+    sc.pp.filter_genes(adatac, min_cells=min_cells, inplace=True)
     
     # Additional filtering based on counts if specified
     if min_cell_reads is not None:
-        sc.pp.filter_cells(adata, min_counts=min_cell_reads, inplace=True)
+        sc.pp.filter_cells(adatac, min_counts=min_cell_reads, inplace=True)
     if min_gene_counts is not None:
-        sc.pp.filter_genes(adata, min_counts=min_gene_counts, inplace=True)
+        sc.pp.filter_genes(adatac, min_counts=min_gene_counts, inplace=True)
 
     # Filter out cells with a high percentage of counts (>25%) from mitochondrial genes
-    adata.var["mt"] = adata.var_names.str.startswith("MT-")
+    adatac.var["mt"] = adatac.var_names.str.startswith("MT-")
     sc.pp.calculate_qc_metrics(
-        adata, qc_vars=["mt"], percent_top=None, log1p=False, inplace=True
+        adatac, qc_vars=["mt"], percent_top=None, log1p=False, inplace=True
     )
-    adata = adata[adata.obs.pct_counts_mt <= 25, :]
+    adatac = adatac[adatac.obs.pct_counts_mt <= 25, :].copy()  # Make an explicit copy here to avoid the warning
 
     # Normalize and log transform
-    sc.pp.normalize_total(adata, target_sum=target_sum)
-    sc.pp.log1p(adata)
+    sc.pp.normalize_total(adatac, target_sum=target_sum)
+    sc.pp.log1p(adatac)
     
     # Identify and keep only highly variable genes
-    sc.pp.highly_variable_genes(adata, n_top_genes=n_top_genes)
-    adata = adata[:, adata.var.highly_variable]
+    sc.pp.highly_variable_genes(adatac, n_top_genes=n_top_genes)
+    adatac = adatac[:, adatac.var.highly_variable].copy()  # Make an explicit copy here to avoid the warning
     
     # Scale data to have a mean of 0 and a variance of 1 for each gene, and limit extreme values to 10
-    sc.pp.scale(adata, max_value=10)
+    sc.pp.scale(adatac, max_value=10)
     
-    return adata
+    return adatac
 
 def convert(adata, metadata_cols=None):
     """
