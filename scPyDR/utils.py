@@ -46,18 +46,10 @@ def load(datadir, prefix="", cache=True):
     # List the files in the directory
     files = os.listdir(datadir)
     
-    # Debug: print out the found files
-    print("Files in directory:", files)
-    
     # Find the files with optional prefix
     barcodes_file = next((f for f in files if 'barcodes' in f and f.endswith('.tsv.gz')), None)
     features_file = next((f for f in files if 'features' in f and f.endswith('.tsv.gz')), None)
     matrix_file = next((f for f in files if 'matrix' in f and f.endswith('.mtx.gz')), None)
-    
-    # Debug: print the identified files
-    print("Identified barcodes file:", barcodes_file)
-    print("Identified features file:", features_file)
-    print("Identified matrix file:", matrix_file)
     
     # Check if all necessary files are found
     if not all([barcodes_file, features_file, matrix_file]):
@@ -80,11 +72,6 @@ def load(datadir, prefix="", cache=True):
         shutil.copy(barcodes_path, temp_barcodes_path)
         shutil.copy(features_path, temp_features_path)
         shutil.copy(matrix_path, temp_matrix_path)
-        
-        # Debug: print the temporary paths
-        print("Temporary barcodes path:", temp_barcodes_path)
-        print("Temporary features path:", temp_features_path)
-        print("Temporary matrix path:", temp_matrix_path)
     
     except Exception as e:
         ERROR(f"An error occurred during file copying: {e}")
@@ -96,7 +83,7 @@ def load(datadir, prefix="", cache=True):
             var_names='gene_symbols' if 'features.tsv.gz' in features_file else 'gene_ids',
             cache=cache
         )
-        print("Data loaded successfully.")
+        print("Data loaded successfully.\n")
     except Exception as e:
         ERROR(f"An error occurred while reading the data: {e}")
     finally:
@@ -104,7 +91,6 @@ def load(datadir, prefix="", cache=True):
         shutil.rmtree(temp_dir)
     
     return adata
-
 
 def preprocess(adata, min_genes=200, min_cells=5,
                 min_cell_reads=None, min_gene_counts=None,

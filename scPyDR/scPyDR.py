@@ -120,7 +120,6 @@ def main():
         outdir += "/"
     if not os.path.exists(outdir):
         os.mkdir(outdir)
-    outf = open(outdir + "scpydr_results.txt", "w")
 
     sys.stdout.write("Welcome to scPyDR! Starting analysis.\n\n")
 
@@ -162,7 +161,7 @@ def main():
     pca.fit(df)  # compute new PCs
     sys.stdout.write("New PCs computed. \n")
     pca_results = pca.transform(df)  # fit data to new PCs
-    sys.stdout.write("Original data successfully projected onto the new PCs! \n\n")
+    sys.stdout.write("Original data successfully projected onto the new PCs! \n")
 
     # -------------------- save and plot PCA results --------------------
 
@@ -192,14 +191,11 @@ def main():
         # Plot the UMAP embedding
         sys.stdout.write("Plotting UMAP embedding... \n")
         utils.plot_umap_results(outdir, filename_prefix, umap_embedding, cluster_labels)
+        sys.stdout.write("Congrats! scPyDR PCA and UMAP were successfully run!\n")
+    else:
+        sys.stdout.write("Congrats! scPyDR PCA was successfully run!\n")
 
-    # -------------------- analysis and conclusion --------------------
-
-    sys.stdout.write("Summarizing results...\n")
-
-    """ 
-    TO DO: benchmarking, analysis, conclusions
-    """
+    sys.stdout.close()
     sys.exit(0)
 
 if __name__ == "__main__":
