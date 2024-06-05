@@ -78,10 +78,10 @@ A subset of the first row of benchmark_pca.txt (produced with `cat data_pca.txt 
 
 The plots for PCA and UMAP from the benchmark dataset are shown below. 
 
-*Note: because UMAP is a stochastic process, the graph may have global differences. In other words, the local clusters will look similar, but they may be placed in different locations on the plot.*
-
 <img src="data_pca_plot.png">
 <img src="data_umap_plot.png">
+
+*Note: because UMAP is a stochastic process, the graph may have global differences. In other words, the local clusters will look similar, but they may be placed in different locations on the plot.*
 
 ## scPyDR Options<a name="Options"></a>
 scPyDR requires the following input file:
@@ -97,7 +97,7 @@ Additional options include:
 * `-t`, `--target_sum` `[FLOAT]`: Number of reads per cell for normalization. Default: 1e4.
 * `-n`, `--nComp` `[INT]`: Number of principal componenets. Default: for n data points and m features, there are min(n-1,m) PCs.
 * `--version`: Print the version of scPyDR.
-* `-u`, `--umap`: Run UMAP for dimensionality reduction and visualization.
+* `-u`, `--umap`: Run UMAP for dimensionality reduction and visualization of the top 50 principal components.
 
 ## File Formats<a name="Formats"></a>
 The input files should be the `features.tsv.gz`, `barcodes.tsv.gz`, and `matrix.mtx.gz` files from `10x cellranger`'s `cellranger count` analysis pipeline. A widely-used source to publish and find such count matrices from scRNA-seq data is [GEO](https://www.ncbi.nlm.nih.gov/geo/). The benchmarking data for this package was found on GEO. Read more on the count matrix file format [here](https://www.10xgenomics.com/support/software/cell-ranger-arc/latest/analysis/feature-barcode-matrices). 
