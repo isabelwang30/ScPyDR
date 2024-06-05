@@ -12,6 +12,7 @@ build/
 lib/
 *.egg
 *.egg-info/
+cache/
 
 # outputs from benchmarking
 benchmark/scpydr_results
