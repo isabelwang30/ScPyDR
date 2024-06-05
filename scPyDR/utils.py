@@ -398,11 +398,16 @@ def plot_umap_results(outdir, filename_prefix, umap_embedding, cluster_labels):
     handles = []
     for cluster in np.unique(cluster_labels):
         handles.append(ax.scatter([], [], s=50, c=[cmap(cluster)], alpha=0.5, label=cluster))
-    ax.legend(handles=handles, title="Clusters", loc='best')
+    
+    # Place the legend outside the plot
+    ax.legend(handles=handles, title="Clusters", bbox_to_anchor=(1.01, 1.02), loc='upper left')
 
-    plt.tight_layout()  # Adjust layout to prevent overlapping labels
+    # Adjust the figure to make space for the legend
+    fig.subplots_adjust(right=0.85)
+
+    plt.tight_layout()  # Adjust layout
 
     output_plot = os.path.join(outdir, f"{filename_prefix}_umap_plot.png")
-    plt.savefig(output_plot)
+    plt.savefig(output_plot, bbox_inches='tight')
     plt.close()
     print(f"UMAP plot saved to {output_plot}\n")
