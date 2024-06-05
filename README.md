@@ -6,31 +6,11 @@
 
 Currently, `scPyDR` only supports the analysis of a single set of scRNA-seq data. Please see [scPyDR Options](#Options) and [File Formats](#Formats) for more information.
 
-[Prerequisites](#Prerequisites) | [Installation](#Installation) | [Basic Usage](#Usage) | [scPyDR Options](#Options) | [File Formats](#Formats) | 
+[Installation](#Installation) | [Prerequisites](#Prerequisites) | [Basic Usage](#Usage) | [scPyDR Options](#Options) | [File Formats](#Formats) | 
 [Contributors](#Contributors)
 
-## Prerequisites<a name="Prerequisites"></a>
-`scPyDR` requires the following python libraries to be installed:
-* numpy
-* pandas
-* matplotlib
-* anndata
-* scanpy
-* umap
-* leidenalg
-
-These can be installed with the following `pip` command:
-```
-pip install numpy pandas matplotlib anndata scanpy umap leidenalg
-```
-
-*Note: if you do not have root access, the packages can be installed locally with the following command:*
-```
-pip install --user numpy pandas matplotlib anndata scanpy umap leidenalg
-```
-
 ## Installation<a name="Installation"></a>
-Once the required libraries are installed, `scPyDR` can be installed with the following commands:
+`scPyDR` can be installed with the following commands:
 ```
 git clone https://github.com/isabelwang30/scPyDR.git
 cd scPyDR
@@ -49,6 +29,28 @@ If the install was successful, the command `scpydr --help` should show a useful 
 *Note: if you get an error that says the `scpydr` command was not found, you may need to include the script installation path in your `$PATH` variable before calling `scpydr`. You can do this with the following command, replacing `<user>` with your own username:*
 ```
 export PATH=$PATH:/home/<user>/.local/bin
+```
+
+## Prerequisites<a name="Prerequisites"></a>
+`scPyDR` requires the following python libraries to be installed:
+* numpy
+* pandas
+* matplotlib
+* anndata
+* scanpy
+* umap-learn
+* leidenalg
+
+Specific versions can be found in [`requirements.txt`](https://github.com/isabelwang30/scPyDR/blob/main/requirements.txt)
+
+These prerequisites can be installed with the following `pip` command from the `scPyDR` directory:
+```
+pip install -r requirements.txt
+```
+
+*Note: if you do not have root access, the packages can be installed locally with the following command:*
+```
+pip install --user -r requirements.txt
 ```
 
 ## Basic Usage<a name="Usage"></a>
