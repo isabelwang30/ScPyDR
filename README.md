@@ -97,7 +97,7 @@ Additional options include:
 * `-gc`, `--min_gene_counts` `[INT]`: Minimum number of counts per gene. Default: None.
 * `-ntop`, `--n_top_genes` `[INT]`: Number of highly variable genes to keep. Default: 500.
 * `-t`, `--target_sum` `[FLOAT]`: Number of reads per cell for normalization. Default: 1e4.
-* `-n`, `--nComp` `[INT]`: Number of principal componenets. Default: for n data points and m features, there are min(n-1,m) PCs.
+* `-n`, `--nComp` `[INT]`: Number of principal componenets for PCA. Default: for n data points and m features, there are min(n-1,m) PCs.
 * `--version`: Print the version of scPyDR.
 * `-u`, `--umap`: Run UMAP for dimensionality reduction and visualization of the top 50 principal components.
 
