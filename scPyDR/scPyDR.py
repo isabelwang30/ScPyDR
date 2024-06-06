@@ -131,12 +131,12 @@ def main():
     except Exception:
         utils.ERROR(">> Failed to load 10x Genomics data into an AnnData object. Please check: \n 1) path to directory \n 2) directory contains properly formatted 10x Genomics files. \n Read more on 10x Genomics files here: https://www.10xgenomics.com/support/software/space-ranger/latest/advanced/hdf5-feature-barcode-matrix-format")
     try:
-        adatac = utils.preprocess(adata, args.min_genes, args.min_cells, args.min_cell_reads,
+        adata_pca = utils.preprocess(adata, args.min_genes, args.min_cells, args.min_cell_reads,
                                  args.min_gene_counts, args.n_top_genes, args.target_sum)
     except Exception:
         utils.ERROR(">> Failed to preprocess data. Check arguments and try again.")
     try:
-        df = utils.convert(adatac)
+        df = utils.convert(adata_pca)
     except Exception:
         utils.ERROR(">> Failed to convert AnnData object to DataFrame. This should not happen; please make a pull request to scPyDR.")
     sys.stdout.write("Data loaded successfully.\n\n")    
@@ -176,7 +176,8 @@ def main():
 
     if args.umap:
         sys.stdout.write("Running UMAP for dimensionality reduction and visualization... \n")
-        umap_embedding, cluster_labels = utils.umap_embedding(adata)
+        adata_umap = utils.preprocess(adata, args.min_genes, args.min_cells, args.min_cell_reads, args.min_gene_counts, args.n_top_genes, args.target_sum)
+        umap_embedding, cluster_labels = utils.umap_embedding(adata_umap)
         # Further actions with umap_embedding if needed
         sys.stdout.write("UMAP computation completed! \n\n")
 

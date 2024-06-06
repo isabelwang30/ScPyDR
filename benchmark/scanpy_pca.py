@@ -1,5 +1,7 @@
 import scanpy as sc
 import argparse
+from scPyDR import utils as utils
+from scPyDR import __version__
 
 def main():
     # Parse command-line arguments
@@ -10,6 +12,9 @@ def main():
     # Load data
     adata = sc.read_10x_mtx(args.datadir)
 
+    # Preprocess the data
+    adata = utils.preprocess(adata)
+    
     # Run PCA with 10 PCs
     sc.pp.pca(adata, n_comps=10)
     # Plot top two PCs

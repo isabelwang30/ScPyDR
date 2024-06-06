@@ -1,5 +1,7 @@
 import scanpy as sc
 import argparse
+from scPyDR import utils as utils
+from scPyDR import __version__
 
 
 def main():
@@ -12,6 +14,9 @@ def main():
 
     # Load data
     adata = sc.read_10x_mtx(args.datadir)
+
+    # Preprocess the data
+    adata = utils.preprocess(adata)
     
     # Run PCA
     sc.pp.pca(adata, n_comps=args.nComp)
@@ -21,7 +26,7 @@ def main():
     explained_var_ratio_n = explained_var_ratio[:args.nComp].sum()
     explained_var_perc_n = round(explained_var_ratio_n*100, 2)
     print("Tool: scanpy.pp.pca")
-    print(f"Number of principal componenets: {args.nComp}")
+    print(f"Number of principal components: {args.nComp}")
     print(f"Total explained variance: {explained_var_perc_n}%")
     
 
